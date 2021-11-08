@@ -20,7 +20,7 @@
 
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">Players</a></li>
+					class="nav-link">Season 2019</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -30,10 +30,19 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">Top 10 Batting Average of Players in 2019</h3>
+			<h3 class="text-center">2019 MLB Player Stats</h3>
 			<hr>
 			
 			<br>
+			
+			<div class="col-md-4">
+				<form action="" method="get">
+					<input type="text" class="form-control" name="q" placeholder="Search here..."/>
+				</form>
+			
+			</div>
+			
+			
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -44,6 +53,7 @@
 				</thead>
 				<tbody>
 					<!--   for (Todo todo: todos) {  -->
+					
 					<c:forEach var="user" items="${listUser}">
 
 						<tr>
