@@ -30,7 +30,7 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">2019 MLB Player Stats</h3>
+			<h3 class="text-center">Top Ten 2019 MLB Player Stats</h3>
 			<hr>
 			
 			<br>

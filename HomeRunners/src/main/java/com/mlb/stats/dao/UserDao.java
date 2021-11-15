@@ -24,10 +24,11 @@ public class UserDao {
     
     
     
-    private static final String SELECT_ALL_BATTERS_2019 = "select id, p.playerID as pid, b.playerid as bid, b.yearID, p.namelast as name, b.teamID as teamID, \r\n"
+    private static final String SELECT_ALL_BATTERS_2019 = "select id, p.playerID as pid, b.playerid as bid, b.yearID, p.nameLast, p.nameFirst, b.teamID as teamID, \r\n"
     		+ " round(b.H*1.0/b.AB, 3) AS average\r\n"
     		+ " from Batting b inner join people p where b.playerid = p.playerid and b.YearID = 2019\r\n"
-    		+ " order by round(b.H*1.0/b.AB, 3) desc\r\n";
+    		+ " order by round(b.H*1.0/b.AB, 3) desc\r\n"
+    		+ " limit 0,10";
     
 
     public UserDao() {}
@@ -90,10 +91,11 @@ public class UserDao {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String nameLast = rs.getString("nameLast");
+                String nameFirst = rs.getString("nameFirst");
                 String teamID = rs.getString("teamID");
                 float average = rs.getFloat("average");
-                users.add(new User(name, teamID, average));
+                users.add(new User(nameLast, nameFirst, teamID, average));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -101,12 +103,13 @@ public class UserDao {
         return users;
     }
     
+    /**********Select Searched Batters*******************************/
     public List < User > selectSearchedBatters(String query) {
-    	String SELECT_SEARCHED_BATTERS = "select id, p.playerID as pid, b.playerid as bid, b.yearID, p.namelast as name, b.teamID as teamID, \r\n"
+    	String SELECT_SEARCHED_BATTERS = "select id, p.playerID as pid, b.playerid as bid, b.yearID, p.nameLast, p.nameFirst, b.teamID as teamID, \r\n"
         		+ " round(b.H*1.0/b.AB, 3) AS average\r\n"
         		+ " from Batting b inner join people p where b.playerid = p.playerid and b.YearID = 2019\r\n"
-        		+ " and p.nameLast like '%" +query+ "%' order by round(b.H*1.0/b.AB, 3) desc\r\n"
-        		+ " limit 0,10";
+        		+ " and (p.nameLast like '%"+query+ "%' or b.teamID like '%"+query+ "%')"
+        		+ " order by round(b.H*1.0/b.AB, 3) desc\r\n";
         // using try-with-resources to avoid closing resources (boiler plate code)
         List < User > users = new ArrayList < > ();
         // Step 1: Establishing a Connection
@@ -123,10 +126,11 @@ public class UserDao {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
+                String nameLast = rs.getString("nameLast");
+                String nameFirst = rs.getString("nameFirst");
                 String teamID = rs.getString("teamID");
                 float average = rs.getFloat("average");
-                users.add(new User(name, teamID, average));
+                users.add(new User(nameLast, nameFirst, teamID, average));
             }
         } catch (SQLException e) {
             printSQLException(e);
