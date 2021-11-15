@@ -103,7 +103,7 @@ public class UserDao {
         return users;
     }
     
-    /**********Select Searched Batters*******************************/
+    /**********Select Top 10 Searched Batters*******************************/
     public List < User > selectSearchedBatters(String query) {
     	String SELECT_SEARCHED_BATTERS = "select id, p.playerID as pid, b.playerid as bid, b.yearID, p.nameLast, p.nameFirst, b.teamID as teamID, \r\n"
         		+ " round(b.H*1.0/b.AB, 3) AS average\r\n"
